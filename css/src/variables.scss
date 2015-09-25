@@ -1,0 +1,241 @@
+// Variables
+// =======================================================
+
+
+/* Basis groottes */
+	$big-font-size                : 22px;
+	$base-font-size               : 14px;
+	$medium-font-size             : 16px;
+  $small-font-size              : 11px;
+	$base-line-height             : 1.8em;
+	$mobile-line-height			      : 1.4em;
+	$mobile-font-size			        : 12px;
+
+
+	/* Breakpoints */
+	$xs							  : 320;
+	$xss						  : 480;
+	$ss							  : 520;
+	$s							  : 600;
+	$mm							  : 768;
+	$m							  : 844;
+	$ms							  : 991;
+	$l							  : 1011;
+	$ll							  : 1132;
+	$xl							  : 1400;
+	$xxl						  : 1600;
+	$xxxl             : 1800;
+
+	/* Lettertypes */
+	$opensans			     : 'Open Sans', sans-serif;
+	$helvetica			   : helvetica;
+
+
+	$normal            		: 400;
+	$bold			            : 600;
+
+	/* Color scheme */
+	
+	$white          : #ffffff;
+  $lightestgrey   : #e3e6ed;
+	$blue		        : #139ee1;
+  $mediumblue     : #0166b8;
+  $greyblue       : #6c6f82;
+  $darkblue       : #2d2c3a;
+  $darkgrey       : #575a63;
+
+  $bluepurple     : #5a5d70;
+  $lightgreyblue  : #cccedd;
+
+	$maintextcolor  : $blue;
+
+
+	
+
+// MIXINS 
+// ==========================================================
+
+@mixin respond( $media ) 
+	{
+		@if $media == xs
+		{
+			@media only screen and (max-width: #{$xs}px) { @content; }
+		}
+		
+		@if $media == xss
+		{
+			@media only screen and (max-width: #{$xss}px) { @content; }
+		}
+		
+		@if $media == ss
+		{
+			@media only screen and (max-width: #{$ss}px) { @content; }
+		}
+		
+		@if $media == s
+		{
+			@media only screen and (max-width: #{$s}px) { @content; }
+		}
+		
+		@if $media == mm
+		{
+			@media only screen and (max-width: #{$mm}px) { @content; }
+		}
+		
+		@if $media == m
+		{
+			@media only screen and (max-width: #{$m}px) { @content; }
+		}
+		
+		@if $media == ms
+		{
+			@media only screen and (max-width: #{$ms}px) { @content; }
+		}
+		
+		@if $media == l
+		{
+			@media only screen and (max-width: #{$l}px) { @content; }
+		}
+		
+		@if $media == ll
+		{
+			@media only screen and (max-width: #{$ll}px) { @content; }
+		}
+		
+		@if $media == xl
+		{
+			@media only screen and (min-width: #{$xl}px) { @content; }
+		}
+		
+		@if $media == xxl
+		{
+			@media only screen and (min-width: #{$xxl}px) { @content; }
+		}
+		
+	}
+
+@mixin inline-block-hack() {
+	display:-moz-inline-stack;
+	display: inline-block !important;
+	*zoom:1;
+	*display:inline;
+}
+	
+@mixin animation( $animation, $time, $loop ) {
+	-webkit-animation: $animation $time $loop;
+	   -moz-animation: $animation $time $loop;
+	     -o-animation: $animation $time $loop;
+	        animation: $animation $time $loop;
+}
+	
+	
+@mixin rotate($deg: 0){ /*, $m11: 0, $m12: 0, $m21: 0, $m22: 0*/
+	-moz-transform: rotate($deg + deg);
+	-o-transform: rotate($deg + deg);
+	-webkit-transform: rotate($deg + deg);	
+	/*-ms-transform: rotate($deg + deg)
+	transform: rotate($deg + deg)
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=#{$m11}, M12=#{$m12}, M21=#{$m21}, M22=#{$m22}, sizingMethod='auto expand');
+	zoom: 1*/
+}
+
+/*Vendor prefixed*/
+@mixin box-sizing ($box: content-box){
+	$value: $box;
+    @include build-prefix('box-sizing', $value);
+}
+
+@mixin border-radius ( $bordertl , $bordertr , $borderbr , $borderbl ){
+	$value : $bordertl+px $bordertr+px  $borderbr+px $borderbl+px;
+	//@include build-prefix('border-radius', $value);
+  border-radius: $value;  
+  -moz-border-radius: $value;  
+  -webkit-border-radius: $value;  
+  -o-border-radius: $value;
+  -ms-border-radius: $value;
+}
+
+@mixin borderRadius($borderRad) {
+  border-radius: $borderRad + px;  
+  -moz-border-radius: $borderRad + px;  
+  -webkit-border-radius: $borderRad + px;  
+  -o-border-radius: $borderRad + px;
+  -ms-border-radius: $borderRad + px;
+}
+
+
+@mixin opacity($ieOpac,$otherOpac){
+  filter: alpha(opacity=$ieOpac); /* internet explorer */  
+  -khtml-opacity: $otherOpac;      /* khtml, old safari */  
+  -moz-opacity: $otherOpac;       /* mozilla, netscape */  
+  opacity: $otherOpac;           /* fx, safari, opera */ 
+}
+
+@mixin borderBox(){
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; 
+}
+
+@mixin textShadow($xoffset,$yoffset,$blur,$color){
+  text-shadow: $xoffset $yoffset $blur $color;
+  filter: dropshadow(color=$color, offx=$xoffset, offy=$yoffset);
+}
+
+@mixin textShadowOpacity($xoffset,$yoffset,$blur,$r, $g, $b, $a){
+  text-shadow: $xoffset $yoffset $blur rgba($r, $g, $b, $a);
+  filter: dropshadow(color=rgba($r, $g, $b, $a), offx=$xoffset, offy=$yoffset);
+}
+
+@mixin backgroundAlpha($r,$g,$b,$a){
+	background: rgba($r, $g, $b, $a);
+}
+
+
+@mixin shadowBox($shadH,$shadV,$shadSpread,$shadColor){
+  -webkit-box-shadow: ($shadH + px ) ($shadV + px) ($shadSpread + px) $shadColor;
+  -moz-box-shadow: ($shadH + px ) ($shadV + px) ($shadSpread + px) $shadColor; 
+  box-shadow: ($shadH + px ) ($shadV + px) ($shadSpread + px) $shadColor;
+  //box-shadow: 0px 1px 5px $shadColor;
+}
+
+@mixin shadowBoxOpac(){
+	-moz-box-shadow: 0 2px 3px rgba(0,0,1,.15); /* drop shadow */
+	-webkit-box-shadow: 0 2px 3px rgba(0,0,1,.15); /* drop shadow */
+	box-shadow: 0 2px 3px rgba(0,0,1,.15); /* drop shadow */
+}
+
+@mixin transitionAll(){
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+@mixin transition($prop,$duration,$animation){
+  -webkit-transition: $prop $duration $animation;
+  -moz-transition: $prop $duration $animation;
+  -ms-transition: $prop $duration $animation;
+  -o-transition: $prop $duration $animation;
+  transition: $prop $duration $animation;
+}
+
+@mixin transitionBackground(){
+  -webkit-transition: background 0.3s ease-in-out;
+  -moz-transition: background 0.3s ease-in-out;
+  -ms-transition: background 0.3s ease-in-out;
+  -o-transition: background 0.3s ease-in-out;
+  transition: background 0.3s ease-in-out;
+}
+
+@mixin transitionColor(){
+  -webkit-transition: color 0.3s ease-in-out;
+  -moz-transition: color 0.3s ease-in-out;
+  -ms-transition: color 0.3s ease-in-out;
+  -o-transition: color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out;
+}
+
+
+
